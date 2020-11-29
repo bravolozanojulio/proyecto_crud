@@ -5,8 +5,7 @@ import {Schema,model} from 'mongoose'
 
 import {Aparato, aparatoSchema} from './aparato'
 
-import {leerTeclado} from '../views/intCadena'
-import { min } from 'moment'
+
 
 
 export class Instalacion{
