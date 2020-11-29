@@ -2,18 +2,28 @@
 // En este caso el recurso "Schema", y el recurso "Model"
 
 import {Schema,model} from 'mongoose'
-import {Aparato, aparatoSchema} from './aparatos'
+
+import {Aparato, aparatoSchema} from './aparato'
+
+import {leerTeclado} from '../views/intCadena'
+
 
 export class Instalacion{
-    private _id:string
+    private _ident:string
     private _fecha:Date
     private _garantia:boolean
     private _direc:string
     private _tec: Array<string>
     private _aparatos: Array<Aparato>
+    private "_soldiario": number
+    private "_asolar":number
+    private "_autonomia":number
 
-    constructor(id:string, fecha: Date, garantia:boolean, direc: string, tec: Array<string>, aparatos: Array<Aparato>) {
-        this._id= id
+
+
+
+    constructor(ident:string, fecha: Date, garantia:boolean, direc: string, tec: Array<string>, aparatos: Array<Aparato>) {
+        this._ident= ident
         this._fecha= fecha
         this._garantia= garantia
         this._direc= direc
@@ -21,42 +31,83 @@ export class Instalacion{
         this._aparatos= aparatos
     }
 
-// Definiremos los metodos tipo Get para obtener la informacion almacenada en los campos
+// Definiremos los metodos tipo Get y set para cada elemento
 
-get id(){
-    return this._id 
+get ident(){
+    return this._ident
+}
+
+set ident(ident:string){
+    this._ident=ident
 }
 
 get fecha(){
     return this._fecha
+}
 
+set fecha(fecha:Date){
+    this._fecha=fecha
 }
 
 get garantia(){
     return this._garantia
 }
+
+set garantia(garantia:boolean){
+    this._garantia=garantia
+}
+
+
 get direc(){
     return this._direc
 }
+
+set direc(direc:string){
+    this._direc=direc
+}
+
 
 get tec(){
     return this._tec
 }
 
+set tec(tec:Array<string>){
+    this._tec=tec
+}
+
+
 get aparatos(){
     return this._aparatos
+}
 
+set aparatos(aparatos:Array<Aparato>){
+    this._aparatos=aparatos
 }
 
 
+
+// Definiremos los calculos 
+
+calculo1(){
+    let total=0
+    for (let a of this._aparatos){
+       console.log(a.carga)
+    }
+
+    
 }
+
+
 
 // A continuación definiremo el type
+}
+
+
 
 export type tInstalacion = {
-    _id: string,
+    _ident: string,
     _fecha: Date,
-    _garantia: Boolean,
+    _garantia: boolean,
     _direc: string,
     _tec: Array<string>
     _aparatos: Array <Aparato>
@@ -66,15 +117,14 @@ export type tInstalacion = {
 // A continuación defineremos el esquema 
 
 const instalacionSchema = new Schema ({
-    _id: {
+    _ident: {
         type: String,
         required:true,
         unique:true // Deberemos crear un indice en nuestra conexion a la base de datis
     },
     _fecha:{
         type: Date,
-        required:true,
-        min: ""
+        required:true
     },
     _garantia:{
         type: Boolean,
@@ -84,18 +134,14 @@ const instalacionSchema = new Schema ({
         type: String,
         required:true,
     },
-    _tec:{
-        type: Array,
-        required:true,
-        items:{type: String},
-        minItems:1,
-        maxitema:3,
+    _tec: {
+        type: [String],
+        required:true
     },
     _aparatos:{
         type:[aparatoSchema],
         required:true,
-    }
-
+    },
 })
 
 
@@ -103,4 +149,4 @@ const instalacionSchema = new Schema ({
 
 // Se indicara el nombre de la clase en plurar en nuestro caso instalacion
 
-export const instalaciones = model('instalaciones', instalacionSchema)
+export const Instalaciones = model('Instalaciones', instalacionSchema)

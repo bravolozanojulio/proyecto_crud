@@ -1,7 +1,7 @@
 import readline from 'readline'
 let readlineI: readline.Interface
 
-let leeLinea = (prompt: string) =>  {
+export let leeLinea = (prompt: string) =>  {
     readlineI = readline.createInterface({
         input: process.stdin,
         output: process.stdout,

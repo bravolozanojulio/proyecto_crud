@@ -4,7 +4,7 @@
 import mongoose from 'mongoose';
 
 class DataBaseConec {
-    private _conexion: string = 'mongodb+srv://julio:_Covacks2807@cluster0.m7xao.mongodb.net/<dbname>?retryWrites=true&w=majority'
+    private _conexion: string = 'mongodb+srv://prueba:123@cluster0.riz7l.mongodb.net/<dbname>?retryWrites=true&w=majority'
     constructor(){}
 
     set conexion(_conexion:string){

@@ -18,16 +18,33 @@ export class Aparato {
 get nombre(){
     return this._nombre
 }
+
+set nombre(nombre:string){
+    this._nombre=nombre
+}
+
 get cant(){
     return this._cant
+}
+
+set cant(cant:number){
+    this._cant=cant
 }
 
 get carga(){
     return this._carga
 }
 
+set carga1(carga:number){
+    this._carga=carga
+}
+
 get uso(){
     return this._uso
+}
+
+set uso(uso:number){
+    this._uso=uso
 }
 
 }
@@ -72,8 +89,3 @@ export const aparatoSchema = new Schema ({
     },
 })
 
-// Exportaremos la coleccion Aparatos de la BD
-
-// Se indicara el nombre de la clase en plurar en nuestro caso aparato
-
-export const aparatos = model('aparatos', aparatoSchema)
