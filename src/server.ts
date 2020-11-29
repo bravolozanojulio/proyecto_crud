@@ -32,7 +32,7 @@ const main = async () => {
 
          // Campos Instalacion
 
-           let ident:string, fecha:Date, garantia:boolean, direc:string,tec: Array<string>, aparatos: Array<Aparato>, _soldiario:number, _asolar:number, _autonomia:number
+           let ident:string, fecha:Date, garantia:boolean, direc:string,tec: Array<string>, aparatos: Array<Aparato>, _sold:number, _asolar:number, _autonomia:number, _evendedor:number
 
 
         // Objeto array aparatos 
@@ -126,7 +126,6 @@ const main = async () => {
                         await oSchema.save()
                         await DB.desconectarBD()
                         break
-
                     case 2:
                         await DB.conectarBD()
 
@@ -134,7 +133,7 @@ const main = async () => {
                         let r2:any
 
                         ident= await leerTeclado('Introduzca el identificador único de la instalacion')
-                        _soldiario= parseInt(await leerTeclado('Introduzca numero de horas de sol'))
+                        _sold= parseInt(await leerTeclado('Introduzca numero de horas de sol diarias'))
                         _asolar= parseInt(await leerTeclado('Introduzca el amperaje electrico de la placa'))
                        
                         query = await Instalaciones.find({'_ident': ident})
@@ -146,11 +145,43 @@ const main = async () => {
                                 let na = new Aparato(a._nombre,a._cant,a._carga,a._uso)
                                 aparatos.push(a)
                             }
+
                             let i2= new Instalacion(r2._ident,r2._fecha,r2._garantia,r2._direc,r2._tec,r2._aparatos)
+                            i2.sold= _sold
+                            i2.asolar=_asolar
+
                             console.log(`${i2.calculo1()}`)
                         }
                         await DB.desconectarBD()
                         break
+                    case 3:
+                            await DB.conectarBD()
+                            let query1: any   
+                            let r3:any
+    
+                            ident= await leerTeclado('Introduzca el identificador único de la instalacion')
+                            _autonomia= parseInt(await leerTeclado('Introduza el numero de dias de autonomia de la instalacion'))
+                            _evendedor= parseInt(await leerTeclado('Introduzca la capacidad de las baterias'))
+                            
+                            query1 = await Instalaciones.find({'_ident': ident})
+    
+                            for (r3 of query1){
+                                
+                                let aparatos : Array<Aparato> = new Array()
+
+                                for (let a of r3._aparatos){
+                                    let na = new Aparato(a._nombre,a._cant,a._carga,a._uso)
+                                    aparatos.push(a)
+                                }
+
+                                let i2= new Instalacion(r3._ident,r3._fecha,r3._garantia,r3._direc,r3._tec,r3._aparatos)
+                                i2.autonomia= _autonomia
+                                i2.evendedor=_evendedor
+                                
+                                console.log(`${i2.calculo2()}`)
+                            }
+                            await DB.desconectarBD()
+                            break
                 }  
             }while (n != 0) {}
         }

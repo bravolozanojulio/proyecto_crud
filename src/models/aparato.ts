@@ -4,10 +4,10 @@
 import {Schema, model } from 'mongoose'
 
 export class Aparato {
-    private _nombre: string
-    private _cant: number
-    private _carga: number
-    private _uso: number
+     _nombre: string
+     _cant: number
+     _carga: number
+     _uso: number
 
     constructor(nombre:string,cant:number,carga:number,uso:number){
         this._nombre=nombre

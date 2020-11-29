@@ -15,10 +15,10 @@ export class Instalacion{
     private _direc:string
     private _tec: Array<string>
     private _aparatos: Array<Aparato>
-    private "_soldiario": number
+    private "_sold": number
     private "_asolar":number
     private "_autonomia":number
-
+    private "_evendedor":number
 
 
 
@@ -84,19 +84,74 @@ set aparatos(aparatos:Array<Aparato>){
     this._aparatos=aparatos
 }
 
+get sold(){
+    return this._sold
+}
+
+set sold (sold:number) {
+    this._sold=sold
+}
+
+
+get asolar (){
+    return this._asolar
+}
+
+set asolar(asolar:number){
+    this._asolar=asolar
+}
+
+
+get autonomia (){
+    return this._autonomia
+}
+
+set autonomia(autonomia:number){
+    this._autonomia=autonomia
+}
+
+
+
+get evendedor (){
+    return this._evendedor
+}
+
+set evendedor(evendedor:number){
+    this._evendedor=evendedor
+}
 
 
 // Definiremos los calculos 
 
 calculo1(){
-    let total=0
+
+    let cdc=0
+    
     for (let a of this._aparatos){
-       console.log(a.carga)
+       cdc= cdc + a._carga * a._cant * a._uso / 12
     }
 
+    let asistema= cdc * 1.2 / this.sold
+    let resultado= Math.ceil(asistema/this.asolar)
     
+    console.log(`\n Son necesarias ${resultado} placas para esta instalación`)
 }
 
+
+calculo2(){
+
+    let cnb=0
+
+    for (let b of this._aparatos){
+    cnb= cnb + b._carga * b._cant * b._uso * this.autonomia
+    }
+
+    let ccb= cnb/0.8
+    let resultado= Math.ceil(ccb /this.evendedor)
+
+    console.log(`\n Son necesarias ${resultado} baterias para esta instalación`)
+
+}
 
 
 // A continuación definiremo el type
