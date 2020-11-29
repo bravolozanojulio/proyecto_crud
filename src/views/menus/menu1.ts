@@ -6,6 +6,7 @@ export const menu1 = async () => {
     console.log('1.- Añadir instalacion')
     console.log('2.- Realizar calculo placas fotovoltaicas')
     console.log('3 - Realizar calculo baterias')
+    console.log('4 - Borrar instalacion')
     console.log('0.- SALIR')
     n = parseInt( await leerTeclado('--OPCIÓN--') )
     return n

@@ -6,6 +6,7 @@
         import {menu2} from './views/menus/menu2'
         import {menu3} from './views/menus/menu3'
 
+
         // La funcion para introducir datos por teclado
 
         import {leerTeclado} from './views/intCadena'
@@ -27,7 +28,7 @@ const main = async () => {
 
         // A continuacion crearemos las varaibles que almacenará las opciones de los distintos menus.
 
-          let n: number, n2:number, n3:number
+          let n: number, n2:number, n3:number,n4:number
 
 
          // Campos Instalacion
@@ -61,6 +62,11 @@ const main = async () => {
                         garantia= Boolean((await leerTeclado ('Garantia: Introduzca true si tiene garantia, en caso contrario no introduzca nada')))
                         direc= await leerTeclado('Introduzca la direccion de instalación')
                         tec1= await leerTeclado('Introduzca el nombre del tecnico de la instalacion') 
+                        
+                        if(tec1 ==""){
+                            console.log('Error no es introducido nada ');
+                            
+                        } 
                         tec= new Array(tec1)
 
                         // Utilizando un bucle do while, preguntaremos al usuario si quiere agregar más tecnicos o no.
@@ -80,9 +86,9 @@ const main = async () => {
                         console.log("A continuación se le solicitaran los datos de los distintos aparatos electricos que posee")
 
                         nombre = await leerTeclado('Introduzca el nombre del aparato electrico')
-                        cant= parseInt(await leerTeclado('Introduzca la cantidad que posee de este aparato'))
-                        carga=parseInt (await leerTeclado('Introduzca la carga en Vatios que requiera este tipo aparato'))
-                        uso=parseInt (await leerTeclado('Introduzca las horas de uso de este aparato'))
+                        cant= parseFloat(await leerTeclado('Introduzca la cantidad que posee de este aparato'))
+                        carga=parseFloat (await leerTeclado('Introduzca la carga en Vatios que requiera este tipo aparato'))
+                        uso=parseFloat (await leerTeclado('Introduzca las horas de uso de este aparato'))
 
                         a1= new Aparato(nombre,cant,carga,uso)
                         aparatos=new Array(a1)
@@ -96,9 +102,9 @@ const main = async () => {
                                     let a2:Aparato
                                 
                                     nombre= await leerTeclado('Introduzca el nombre del aparato electrico')
-                                    cant= parseInt(await leerTeclado('Introduzca la cantidad que posee de este aparato'))
-                                    carga=parseInt (await leerTeclado('Introduzca la carga en Vatios que requiera este tipo aparato'))
-                                    uso=parseInt (await leerTeclado('Introduzca las horas de uso de este aparato'))
+                                    cant= parseFloat(await leerTeclado('Introduzca la cantidad que posee de este aparato'))
+                                    carga=parseFloat (await leerTeclado('Introduzca la carga en Vatios que requiera este tipo aparato'))
+                                    uso=parseFloat (await leerTeclado('Introduzca las horas de uso de este aparato'))
                                     a2= new Aparato(nombre,cant,carga,uso)
 
                                     aparatos.push(a2)
@@ -133,8 +139,8 @@ const main = async () => {
                         let r2:any
 
                         ident= await leerTeclado('Introduzca el identificador único de la instalacion')
-                        _sold= parseInt(await leerTeclado('Introduzca numero de horas de sol diarias'))
-                        _asolar= parseInt(await leerTeclado('Introduzca el amperaje electrico de la placa'))
+                        _sold= parseFloat(await leerTeclado('Introduzca numero de horas de sol diarias'))
+                        _asolar= parseFloat(await leerTeclado('Introduzca el amperaje electrico de la placa'))
                        
                         query = await Instalaciones.find({'_ident': ident})
 
@@ -160,8 +166,8 @@ const main = async () => {
                             let r3:any
     
                             ident= await leerTeclado('Introduzca el identificador único de la instalacion')
-                            _autonomia= parseInt(await leerTeclado('Introduza el numero de dias de autonomia de la instalacion'))
-                            _evendedor= parseInt(await leerTeclado('Introduzca la capacidad de las baterias'))
+                            _autonomia= parseFloat(await leerTeclado('Introduza el numero de dias de autonomia de la instalacion'))
+                            _evendedor= parseFloat(await leerTeclado('Introduzca la capacidad de las baterias'))
                             
                             query1 = await Instalaciones.find({'_ident': ident})
     
@@ -182,7 +188,14 @@ const main = async () => {
                             }
                             await DB.desconectarBD()
                             break
-                }  
+                    case 4:
+                        await DB.conectarBD()
+                        let query2: any   
+                        ident= await leerTeclado('Introduzca el identificador único de la instalacion')
+                        query2 = await Instalaciones.findOneAndDelete({'_ident': ident})
+                        await DB.desconectarBD()
+                        break
+                    }
             }while (n != 0) {}
         }
 

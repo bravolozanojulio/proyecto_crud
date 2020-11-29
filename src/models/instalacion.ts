@@ -6,6 +6,7 @@ import {Schema,model} from 'mongoose'
 import {Aparato, aparatoSchema} from './aparato'
 
 import {leerTeclado} from '../views/intCadena'
+import { min } from 'moment'
 
 
 export class Instalacion{
@@ -124,7 +125,6 @@ set evendedor(evendedor:number){
 // Definiremos los calculos 
 
 calculo1(){
-
     let cdc=0
     
     for (let a of this._aparatos){
@@ -160,18 +160,47 @@ calculo2(){
 
 
 export type tInstalacion = {
-    _ident: string,
+    _ident: String,
     _fecha: Date,
     _garantia: boolean,
-    _direc: string,
-    _tec: Array<string>
+    _direc: String,
+    _tec: Array<String>
     _aparatos: Array <Aparato>
 }
 
 
 // A continuación defineremos el esquema 
 
+
+function arraymax(_tec:Array<string>) {
+    return _tec.length <= 2 
+  }
+
+
+function vacio(_tec:Array<string>) {
+
+    if (_tec[0] !="") {
+        return _tec[1]!= "" 
+    } else {
+        return _tec[0] != "" 
+    }
+   
+  }
+
+
+var arrayval = [
+    { validator: arraymax, msg: 'Máximo 2 trabajadores' },
+    { validator: vacio, msg: 'Un trabajador no tiene nombre' }
+];
+
+
+
 const instalacionSchema = new Schema ({
+    _tec: {
+        type: [String],
+        required:true,
+        validate:arrayval,
+    },
     _ident: {
         type: String,
         required:true,
@@ -189,15 +218,12 @@ const instalacionSchema = new Schema ({
         type: String,
         required:true,
     },
-    _tec: {
-        type: [String],
-        required:true
-    },
     _aparatos:{
         type:[aparatoSchema],
         required:true,
     },
 })
+
 
 
 // Exportaremos la coleccion Aparatos de la BD
